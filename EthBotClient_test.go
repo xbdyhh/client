@@ -1,4 +1,4 @@
-package go_http_client
+package client
 
 import (
 	"fmt"
