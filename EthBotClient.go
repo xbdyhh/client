@@ -31,6 +31,23 @@ func (ecli *EthInteractiveBotClient)InitUrl(host,scheme,path,fragment string,Que
 	ecli.Query = Query
 }
 
+func (ecli *EthInteractiveBotClient)AddUrlQuery(a map[string][]string){
+	for key,val := range a{
+		if v,ok :=ecli.Query[key];ok{
+			ecli.Query[key] = append(v,val...)
+		}else {
+			ecli.Query[key] = val
+		}
+	}
+}
+
+func (ecli *EthInteractiveBotClient)DeleteUrlQuery(keys []string)  {
+	for _,key:=range keys{
+		if _,ok := ecli.Query[key];ok{
+			delete(ecli.Query,key)
+		}
+	}
+}
 
 func (ECli *EthInteractiveBotClient)Get() error{
 	ECli.Request.URL.RawQuery = ECli.Query.Encode()
