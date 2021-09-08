@@ -15,12 +15,14 @@ type  EthInteractiveBotClient struct {
 
 }
 
+// NewEthINteractiveBotClient 初始化一个http访问客户端
 func NewEthINteractiveBotClient() *EthInteractiveBotClient {
 	return &EthInteractiveBotClient{
 		ResponseBody: nil,
 	}
 }
 
+// InitUrl 初始化一个url，从前到后分别为域名 方法 路径 锚点 查询参数
 func (ecli *EthInteractiveBotClient)InitUrl(host,scheme,path,fragment string,Query map[string][]string)  {
 	termUrl := new(url.URL)
 	termUrl.Host =  host
@@ -31,6 +33,7 @@ func (ecli *EthInteractiveBotClient)InitUrl(host,scheme,path,fragment string,Que
 	ecli.Query = Query
 }
 
+// AddUrlQuery 用于添加URL中的查询参数
 func (ecli *EthInteractiveBotClient)AddUrlQuery(a map[string][]string){
 	for key,val := range a{
 		if v,ok :=ecli.Query[key];ok{
@@ -41,6 +44,7 @@ func (ecli *EthInteractiveBotClient)AddUrlQuery(a map[string][]string){
 	}
 }
 
+// DeleteUrlQuery 用于删除url中的查询
 func (ecli *EthInteractiveBotClient)DeleteUrlQuery(keys []string)  {
 	for _,key:=range keys{
 		if _,ok := ecli.Query[key];ok{
@@ -49,6 +53,7 @@ func (ecli *EthInteractiveBotClient)DeleteUrlQuery(keys []string)  {
 	}
 }
 
+// Get 使用get方法，返回信息储存在ecli的responsebody中
 func (ECli *EthInteractiveBotClient)Get() error{
 	ECli.Request.URL.RawQuery = ECli.Query.Encode()
 	resp,err := ECli.Do(ECli.Request)
