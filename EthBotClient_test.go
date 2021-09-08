@@ -7,11 +7,14 @@ import (
 
 func TestNewEthINteractiveBotClient(t *testing.T) {
 	cli := NewEthINteractiveBotClient()
-	cli.Url = "http://www.baidu.com/"
+	fmt.Println("new client success!!")
+	cli.InitUrl("baidu.com","http","","",nil)
+	fmt.Println("init url success!!")
 	cli.Get()
-	if cli.Response == nil{
+	fmt.Println("get method success")
+	if cli.ResponseBody == nil{
 		t.Errorf("eth bot get err")
 	}else {
-		fmt.Printf("response is :%v",string(cli.Response))
+		fmt.Printf("response is :%v",string(cli.ResponseBody))
 	}
 }
