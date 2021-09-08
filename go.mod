@@ -1,3 +1,3 @@
-module go-http-client
+module client
 
 go 1.17
