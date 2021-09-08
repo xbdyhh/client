@@ -32,7 +32,7 @@ func (ecli *EthInteractiveBotClient)InitUrl(host,scheme,path,fragment string,Que
 	termUrl.Path = path
 	termUrl.Fragment = fragment
 	ecli.Request.URL =termUrl
-	//ecli.Query = Query
+	ecli.Query = Query
 }
 
 // AddUrlQuery 用于添加URL中的查询参数
@@ -60,6 +60,8 @@ func (ECli *EthInteractiveBotClient)Get() error{
 	if ECli.Query!= nil{
 		ECli.Request.URL.RawQuery = ECli.Query.Encode()
 	}
+	fmt.Println("url is",ECli.Request.URL.String())
+	ECli.Request.Method = "GET"
 	resp,err := ECli.Do(ECli.Request)
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
