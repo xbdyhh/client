@@ -5,9 +5,15 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
+type IReader struct {
+	*strings.Reader
+}
+
 type  EthInteractiveBotClient struct {
+	data url.Values
 	http.Client
 	Request *http.Request
 	Query url.Values//url中的query
@@ -18,7 +24,8 @@ type  EthInteractiveBotClient struct {
 // NewEthINteractiveBotClient 初始化一个http访问客户端
 func NewEthINteractiveBotClient() *EthInteractiveBotClient {
 	return &EthInteractiveBotClient{
-
+		Client: http.Client{},
+		Query: url.Values{},
 		Request: &http.Request{},
 		ResponseBody: nil,
 	}
@@ -74,5 +81,34 @@ func (ECli *EthInteractiveBotClient)Get() error{
 	}else {
 		fmt.Printf("body is %v",string(body))
 	}
+	return nil
+}
+
+func (ECli *EthInteractiveBotClient)Post() error{
+	if ECli.Query!= nil{
+		ECli.Request.URL.RawQuery = ECli.Query.Encode()
+	}
+	fmt.Println("url is",ECli.Request.URL.String())
+	b := ECli.data.Encode()
+	var b2 IReader
+	b2.Reader = strings.NewReader(b)
+	ECli.Request.Body = b2
+	ECli.Request.Method = http.MethodPost
+	resp,err := ECli.Do(ECli.Request)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil{
+		return err
+	}
+	ECli.ResponseBody = body
+	if resp.Body == nil{
+		fmt.Print("body is nil")
+	}else {
+		fmt.Printf("body is %v",string(body))
+	}
+	return nil
+}
+
+func (r IReader)Close() error{
 	return nil
 }
