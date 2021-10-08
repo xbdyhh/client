@@ -8,8 +8,8 @@ import (
 func TestNewEthINteractiveBotClient(t *testing.T) {
 	cli := NewEthINteractiveBotClient()
 	fmt.Println("new client success!!")
-	cli.InitUrl("baidu.com","http","","", map[string][]string{
-		"wd":{"goland"},
+	cli.InitUrl("23.88.111.115:9090","http","/api/v1/query","", map[string][]string{
+		"query": {"tendermint_consensus_validator_power"},
 	})
 	fmt.Println("init url success!!")
 	cli.Get()

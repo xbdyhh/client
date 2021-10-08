@@ -77,9 +77,9 @@ func (ECli *EthInteractiveBotClient)Get() error{
 	}
 	ECli.ResponseBody = body
 	if resp.Body == nil{
-		fmt.Print("body is nil")
+		fmt.Print("body is nil\n")
 	}else {
-		fmt.Printf("body is %v",string(body))
+		fmt.Printf("body is %v\n",string(body))
 	}
 	return nil
 }
